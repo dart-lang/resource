@@ -6,7 +6,6 @@ import "dart:async" show Future, Stream;
 import "dart:convert" show Encoding, LATIN1, UTF8;
 import "dart:io" show
     File, HttpClient, HttpClientResponse, HttpClientRequest, HttpHeaders;
-import "dart:typed_data" show Uint8List;
 
 import "package:typed_data/typed_buffers.dart" show Uint8Buffer;
 

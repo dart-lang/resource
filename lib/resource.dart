@@ -26,5 +26,7 @@
 /// browser.
 library resource;
 
+import "dart:core" hide Resource;
+
 export "src/io/resource.dart" show Resource;
 export "src/io/loader.dart" show ResourceLoader;
