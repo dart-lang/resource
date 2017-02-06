@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.2
+- Fix bug in `readAsString` when charset is LATIN-1 and content-length is set.
+
 ## 2.1.1
 - Reduce max concurrent connections to the same host to 6 when using `dart:io`.
   That's the same limit that many browsers use.

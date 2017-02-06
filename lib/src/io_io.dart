@@ -76,7 +76,8 @@ Future<String> readAsString(Uri uri, Encoding encoding) async {
       // Special case LATIN-1 since it is common and doesn't need decoding.
       int length = response.contentLength;
       if (length < 0) length = 0;
-      var buffer = new Uint8Buffer(length);
+      // Create empty buffer with capacity matching contentLength.
+      var buffer = new Uint8Buffer(length)..length = 0;
       await for (var bytes in response) {
         buffer.addAll(bytes);
       }

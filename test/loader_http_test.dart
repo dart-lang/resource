@@ -30,6 +30,9 @@ main() {
       var encoding = parseAcceptCharset(encodings);
       request.response.headers.contentType =
           new ContentType("text", "plain", charset: encoding.name);
+      if (request.uri.query.contains("length")) {
+        request.response.headers.contentLength = content.length;
+      }
       request.response..write(content)
                       ..close();
     }).catchError(print);
@@ -44,6 +47,14 @@ main() {
   test("Latin-1 encoding", () async {
     var loader = ResourceLoader.defaultLoader;
     String string = await loader.readAsString(uri, encoding: LATIN1);
+    expect(string, content);
+  });
+
+  test("Latin-1 encoding w/ length", () async {
+    // Regression test for issue #21.
+    var loader = ResourceLoader.defaultLoader;
+    var newUri = uri.replace(query: "length");  // Request length set.
+    String string = await loader.readAsString(newUri, encoding: LATIN1);
     expect(string, content);
   });
 
