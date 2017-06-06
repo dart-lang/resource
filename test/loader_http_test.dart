@@ -31,10 +31,12 @@ main() {
       request.response.headers.contentType =
           new ContentType("text", "plain", charset: encoding.name);
       if (request.uri.query.contains("length")) {
-        request.response.headers.contentLength = content.length;
+        request.response.headers.contentLength =
+            encoding.encode(content).length;
       }
-      request.response..write(content)
-                      ..close();
+      request.response
+        ..write(content)
+        ..close();
     }).catchError(print);
   });
 
@@ -53,12 +55,19 @@ main() {
   test("Latin-1 encoding w/ length", () async {
     // Regression test for issue #21.
     var loader = ResourceLoader.defaultLoader;
-    var newUri = uri.replace(query: "length");  // Request length set.
+    var newUri = uri.replace(query: "length"); // Request length set.
     String string = await loader.readAsString(newUri, encoding: LATIN1);
     expect(string, content);
   });
 
   test("UTF-8 encoding", () async {
+    var loader = ResourceLoader.defaultLoader;
+    var newUri = uri.replace(query: "length"); // Request length set.
+    String string = await loader.readAsString(newUri, encoding: UTF8);
+    expect(string, content);
+  });
+
+  test("UTF-8 encoding w/ length", () async {
     var loader = ResourceLoader.defaultLoader;
     String string = await loader.readAsString(uri, encoding: UTF8);
     expect(string, content);
@@ -66,13 +75,20 @@ main() {
 
   test("bytes", () async {
     var loader = ResourceLoader.defaultLoader;
-    List<int> bytes = await loader.readAsBytes(uri);  // Sender uses Latin-1.
+    List<int> bytes = await loader.readAsBytes(uri); // Sender uses Latin-1.
+    expect(bytes, content.codeUnits);
+  });
+
+  test("bytes w/ length", () async {
+    var loader = ResourceLoader.defaultLoader;
+    var newUri = uri.replace(query: "length"); // Request length set.
+    List<int> bytes = await loader.readAsBytes(newUri); // Sender uses Latin-1.
     expect(bytes, content.codeUnits);
   });
 
   test("byte stream", () async {
     var loader = ResourceLoader.defaultLoader;
-    var bytes = loader.openRead(uri);  // Sender uses Latin-1.
+    var bytes = loader.openRead(uri); // Sender uses Latin-1.
     var buffer = [];
     await bytes.forEach(buffer.addAll);
     expect(buffer, content.codeUnits);
@@ -80,20 +96,20 @@ main() {
 
   test("not found - String", () async {
     var loader = ResourceLoader.defaultLoader;
-    var badUri = uri.resolve("file.not");  // .not makes server fail.
-    expect(loader.readAsString(badUri), throws);
+    var badUri = uri.resolve("file.not"); // .not makes server fail.
+    expect(loader.readAsString(badUri), throwsException);
   });
 
   test("not found - bytes", () async {
     var loader = ResourceLoader.defaultLoader;
-    var badUri = uri.resolve("file.not");  // .not makes server fail.
-    expect(loader.readAsBytes(badUri), throws);
+    var badUri = uri.resolve("file.not"); // .not makes server fail.
+    expect(loader.readAsBytes(badUri), throwsException);
   });
 
   test("not found - byte stream", () async {
     var loader = ResourceLoader.defaultLoader;
-    var badUri = uri.resolve("file.not");  // .not makes server fail.
-    expect(loader.openRead(badUri).length, throws);
+    var badUri = uri.resolve("file.not"); // .not makes server fail.
+    expect(loader.openRead(badUri).length, throwsException);
   });
 
   tearDown(() {
@@ -101,7 +117,6 @@ main() {
     server = null;
   });
 }
-
 
 Encoding parseAcceptCharset(List<String> headers) {
   var encoding = LATIN1;

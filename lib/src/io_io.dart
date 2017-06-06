@@ -4,13 +4,15 @@
 
 import "dart:async" show Future, Stream;
 import "dart:convert" show Encoding, LATIN1, UTF8;
-import "dart:io" show File,
-                      HttpStatus,
-                      HttpClient,
-                      HttpClientResponse,
-                      HttpClientRequest,
-                      HttpException,
-                      HttpHeaders;
+import "dart:io"
+    show
+        File,
+        HttpStatus,
+        HttpClient,
+        HttpClientResponse,
+        HttpClientRequest,
+        HttpException,
+        HttpHeaders;
 
 import "package:typed_data/typed_buffers.dart" show Uint8Buffer;
 
@@ -43,7 +45,8 @@ Future<List<int>> readAsBytes(Uri uri) async {
     _throwIfFailed(response, uri);
     int length = response.contentLength;
     if (length < 0) length = 0;
-    var buffer = new Uint8Buffer(length);
+    // Create empty buffer with capacity matching contentLength.
+    var buffer = new Uint8Buffer(length)..length = 0;
     await for (var bytes in response) {
       buffer.addAll(bytes);
     }
