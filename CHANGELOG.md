@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.3
+- Fix bug in `readAsBytes` which returned twice as much data as expected.
+
 ## 2.1.2
 - Fix bug in `readAsString` when charset is LATIN-1 and content-length is set.
 
