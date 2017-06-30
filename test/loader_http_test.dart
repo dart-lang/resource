@@ -16,7 +16,8 @@ main() {
   var server;
   var uri;
   setUp(() async {
-    server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 0);
+    var addr = (await InternetAddress.lookup("localhost"))[0];
+    server = await HttpServer.bind(addr, 0);
     int port = server.port;
     uri = Uri.parse("http://localhost:$port/default.html");
     server.forEach((HttpRequest request) {
