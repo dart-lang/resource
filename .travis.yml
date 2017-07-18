@@ -1,15 +1,26 @@
 language: dart
-
-script: ./tool/travis.sh
-
-# Speed up builds by using containerization. Disable this if you need to use
-# sudo in your scripts.
 sudo: false
+dart:
+  - stable
+  - dev
+  - 1.19.1
+dart_task:
+  - test: -p vm
+    xvfb: false
+  - test: -p firefox
+  - test: -p dartium
+    install_dartium: true
+  - dartanalyzer
 
+matrix:
+  include:
+  - dart: stable
+    dart_task: dartfmt
+
+# Only building master means that we don't run two builds for each pull request.
 branches:
-  only:
-    - master
+  only: [master]
 
 cache:
   directories:
-  - $HOME/.pub-cache
+    - $HOME/.pub-cache
