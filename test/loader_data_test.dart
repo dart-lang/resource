@@ -16,9 +16,8 @@ main() {
     group("${encoding.name}${base64 ? " base64" : ""}", () {
       var uri;
       setUp(() {
-        var dataUri = new UriData.fromString(content,
-                                             encoding: encoding,
-                                             base64: base64);
+        var dataUri =
+            new UriData.fromString(content, encoding: encoding, base64: base64);
         uri = dataUri.uri;
       });
 
@@ -43,6 +42,7 @@ main() {
       });
     });
   }
+
   testFile(LATIN1, true);
   testFile(LATIN1, false);
   testFile(UTF8, true);

@@ -27,15 +27,19 @@ main() {
       var resource = new Resource(uri, loader: loader);
       var res = await resource.openRead().toList();
       var resolved = await resolve(uri);
-      expect(res, [[0, 0, 0]]);
+      expect(res, [
+        [0, 0, 0]
+      ]);
       var res1 = await resource.readAsBytes();
       expect(res1, [0, 0, 0]);
       var res2 = await resource.readAsString(encoding: ASCII);
       expect(res2, "\x00\x00\x00");
 
-      expect(loader.requests, [["Stream", resolved],
-                               ["Bytes", resolved],
-                               ["String", resolved, ASCII]]);
+      expect(loader.requests, [
+        ["Stream", resolved],
+        ["Bytes", resolved],
+        ["String", resolved, ASCII]
+      ]);
     }
 
     test("load package: URIs", () async {
@@ -52,18 +56,22 @@ main() {
   });
 }
 
-
 class LogLoader implements ResourceLoader {
   final List requests = [];
-  void reset() { requests.clear(); }
+  void reset() {
+    requests.clear();
+  }
+
   Stream<List<int>> openRead(Uri uri) async* {
     requests.add(["Stream", uri]);
     yield [0x00, 0x00, 0x00];
   }
+
   Future<List<int>> readAsBytes(Uri uri) async {
     requests.add(["Bytes", uri]);
     return [0x00, 0x00, 0x00];
   }
+
   Future<String> readAsString(Uri uri, {Encoding encoding}) async {
     requests.add(["String", uri, encoding]);
     return "\x00\x00\x00";

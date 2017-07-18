@@ -26,6 +26,6 @@ class PackageLoader implements ResourceLoader {
   Future<List<int>> readAsBytes(Uri uri) async =>
       _loader.readAsBytes(await resolveUri(uri));
 
-  Future<String> readAsString(Uri uri, { Encoding encoding }) async =>
+  Future<String> readAsString(Uri uri, {Encoding encoding}) async =>
       _loader.readAsString(await resolveUri(uri), encoding: encoding);
 }

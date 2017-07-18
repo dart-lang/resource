@@ -54,6 +54,7 @@ main() {
       });
     });
   }
+
   testFile(LATIN1);
   testFile(UTF8);
 

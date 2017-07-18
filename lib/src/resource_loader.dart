@@ -7,8 +7,7 @@ import "dart:convert" show Encoding;
 
 import "io_none.dart"
     if (dart.library.html) "io_html.dart"
-    if (dart.library.io) "io_io.dart"
-    as io;
+    if (dart.library.io) "io_io.dart" as io;
 import "package_loader.dart";
 
 /// Resource loading strategy.
@@ -69,4 +68,3 @@ class DefaultLoader implements ResourceLoader {
   Future<String> readAsString(Uri uri, {Encoding encoding}) =>
       io.readAsString(uri, encoding);
 }
-

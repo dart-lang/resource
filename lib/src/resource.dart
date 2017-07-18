@@ -43,7 +43,8 @@ class Resource {
   /// as many of `http`, `https`, `file` and `data` as are available on the
   /// current platform.
   const Resource(uri, {ResourceLoader loader})
-      : _uri = uri, _loader = loader ?? const DefaultLoader();
+      : _uri = uri,
+        _loader = loader ?? const DefaultLoader();
 
   /// The location URI of this resource.
   ///
