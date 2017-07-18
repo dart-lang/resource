@@ -4,11 +4,12 @@
 
 import "dart:async" show Future, Stream;
 import "dart:convert" show Encoding;
-import "package_loader.dart";
+
 import "io_none.dart"
     if (dart.library.html) "io_html.dart"
     if (dart.library.io) "io_io.dart"
     as io;
+import "package_loader.dart";
 
 /// Resource loading strategy.
 ///

@@ -4,10 +4,10 @@
 
 @TestOn("vm")
 
-import 'dart:core' hide Resource;
 import "dart:async" show Future, Stream;
-import "dart:isolate" show Isolate;
 import "dart:convert" show Encoding, ASCII;
+import 'dart:core';
+import "dart:isolate" show Isolate;
 import "package:resource/resource.dart";
 import "package:test/test.dart";
 
@@ -28,10 +28,10 @@ main() {
       var res = await resource.openRead().toList();
       var resolved = await resolve(uri);
       expect(res, [[0, 0, 0]]);
-      res = await resource.readAsBytes();
-      expect(res, [0, 0, 0]);
-      res = await resource.readAsString(encoding: ASCII);
-      expect(res, "\x00\x00\x00");
+      var res1 = await resource.readAsBytes();
+      expect(res1, [0, 0, 0]);
+      var res2 = await resource.readAsString(encoding: ASCII);
+      expect(res2, "\x00\x00\x00");
 
       expect(loader.requests, [["Stream", resolved],
                                ["Bytes", resolved],
