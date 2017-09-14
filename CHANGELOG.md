@@ -1,4 +1,6 @@
-# Changelog
+## 2.1.4
+
+- Require at least Dart 1.23.0.
 
 ## 2.1.3
 - Fix bug in `readAsBytes` which returned twice as much data as expected.
