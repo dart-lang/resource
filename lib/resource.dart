@@ -17,7 +17,7 @@
 ///
 ///     var resource = new Resource("http://example.com/data.json");
 ///     var obj = await resource.openRead()   // Reads as stream of bytes.
-///                             .transform(UTF8.fuse(JSON).decoder)
+///                             .transform(utf8.fuse(JSON).decoder)
 ///                             .first;
 library resource;
 
