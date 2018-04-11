@@ -55,8 +55,8 @@ main() {
     });
   }
 
-  testFile(LATIN1);
-  testFile(UTF8);
+  testFile(latin1);
+  testFile(utf8);
 
   tearDown(() {
     dir.delete(recursive: true);

@@ -10,7 +10,7 @@
 /// Example:
 ///
 ///     var resource = new Resource("package:foo/foo_data.txt");
-///     var string = await resource.readAsString(UTF8);
+///     var string = await resource.readAsString(utf8);
 ///     print(string);
 ///
 /// Example:

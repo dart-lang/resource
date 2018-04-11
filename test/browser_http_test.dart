@@ -27,14 +27,14 @@ main() {
   test("Latin-1 encoding", () async {
     var loader = ResourceLoader.defaultLoader;
     var uri = Uri.base.resolve("testfile-latin1.txt");
-    String string = await loader.readAsString(uri, encoding: LATIN1);
+    String string = await loader.readAsString(uri, encoding: latin1);
     expect(string, content);
   });
 
   test("UTF-8 encoding", () async {
     var loader = ResourceLoader.defaultLoader;
     var uri = Uri.base.resolve("testfile-utf8.txt");
-    String string = await loader.readAsString(uri, encoding: UTF8);
+    String string = await loader.readAsString(uri, encoding: utf8);
     expect(string, content);
   });
 

@@ -43,8 +43,8 @@ main() {
     });
   }
 
-  testFile(LATIN1, true);
-  testFile(LATIN1, false);
-  testFile(UTF8, true);
-  testFile(UTF8, false);
+  testFile(latin1, true);
+  testFile(latin1, false);
+  testFile(utf8, true);
+  testFile(utf8, false);
 }

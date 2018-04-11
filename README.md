@@ -10,11 +10,11 @@ Example:
 
 ```dart
 import 'package:resource/resource.dart' show Resource;
-import 'dart:convert' show UTF8;
+import 'dart:convert' show utf8;
 
 main() async {
   var resource = new Resource("package:foo/foo_data.txt");
-  var string = await resource.readAsString(encoding: UTF8);
+  var string = await resource.readAsString(encoding: utf8);
   print(string);
 }
 ```

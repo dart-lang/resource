@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import "dart:async" show Future, Stream;
-import "dart:convert" show Encoding, LATIN1, UTF8;
+import "dart:convert" show Encoding, latin1, utf8;
 import "dart:io"
     show
         File,
@@ -61,7 +61,7 @@ Future<List<int>> readAsBytes(Uri uri) async {
 /// Read the bytes of a URI as a string.
 Future<String> readAsString(Uri uri, Encoding encoding) async {
   if (uri.scheme == "file") {
-    if (encoding == null) encoding = UTF8;
+    if (encoding == null) encoding = utf8;
     return new File.fromUri(uri).readAsString(encoding: encoding);
   }
   if (uri.scheme == "http" || uri.scheme == "https") {
@@ -74,7 +74,7 @@ Future<String> readAsString(Uri uri, Encoding encoding) async {
     HttpClientResponse response = await request.close();
     _throwIfFailed(response, uri);
     encoding ??= Encoding.getByName(response.headers.contentType?.charset);
-    if (encoding == null || encoding == LATIN1) {
+    if (encoding == null || encoding == latin1) {
       // Default to LATIN-1 if no encoding found.
       // Special case LATIN-1 since it is common and doesn't need decoding.
       int length = response.contentLength;

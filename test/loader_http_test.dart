@@ -49,7 +49,7 @@ main() {
 
   test("Latin-1 encoding", () async {
     var loader = ResourceLoader.defaultLoader;
-    String string = await loader.readAsString(uri, encoding: LATIN1);
+    String string = await loader.readAsString(uri, encoding: latin1);
     expect(string, content);
   });
 
@@ -57,20 +57,20 @@ main() {
     // Regression test for issue #21.
     var loader = ResourceLoader.defaultLoader;
     var newUri = uri.replace(query: "length"); // Request length set.
-    String string = await loader.readAsString(newUri, encoding: LATIN1);
+    String string = await loader.readAsString(newUri, encoding: latin1);
     expect(string, content);
   });
 
   test("UTF-8 encoding", () async {
     var loader = ResourceLoader.defaultLoader;
     var newUri = uri.replace(query: "length"); // Request length set.
-    String string = await loader.readAsString(newUri, encoding: UTF8);
+    String string = await loader.readAsString(newUri, encoding: utf8);
     expect(string, content);
   });
 
   test("UTF-8 encoding w/ length", () async {
     var loader = ResourceLoader.defaultLoader;
-    String string = await loader.readAsString(uri, encoding: UTF8);
+    String string = await loader.readAsString(uri, encoding: utf8);
     expect(string, content);
   });
 
@@ -120,7 +120,7 @@ main() {
 }
 
 Encoding parseAcceptCharset(List<String> headers) {
-  var encoding = LATIN1;
+  var encoding = latin1;
   if (headers != null) {
     var weight = 0.0;
     var pattern = new RegExp(r"([\w-]+)(;\s*q=[\d.]+)?");
