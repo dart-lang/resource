@@ -1,5 +1,4 @@
 ## 2.1.4
-
 - Require at least Dart 1.23.0.
 
 ## 2.1.3
