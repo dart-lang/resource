@@ -1,5 +1,5 @@
 name: resource
-version: 2.1.4-dev
+version: 2.1.4
 description: Reading resource data from (package and other) files.
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/resource
