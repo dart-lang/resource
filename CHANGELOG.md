@@ -1,6 +1,6 @@
 ## 2.1.5
 
-- Require at least Dart 2.0.0-dev.61.
+- Set SDK constraint to `>=2.0.0-dev.61.0 <3.0.0`, and adjust other dependencies.
 
 ## 2.1.4
 - Require at least Dart 2.0.0.
