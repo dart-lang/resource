@@ -17,7 +17,7 @@ void main() {
       Uri uri;
       setUp(() {
         var dataUri =
-             UriData.fromString(content, encoding: encoding, base64: base64);
+            UriData.fromString(content, encoding: encoding, base64: base64);
         uri = dataUri.uri;
       });
 
