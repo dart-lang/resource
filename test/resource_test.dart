@@ -11,7 +11,7 @@ import "package:resource/resource.dart";
 import "package:test/test.dart";
 
 void main() {
-  Uri pkguri(path) =>  Uri(scheme: "package", path: path);
+  Uri pkguri(path) => Uri(scheme: "package", path: path);
 
   Future<Uri> resolve(Uri source) async {
     if (source.scheme == "package") {
@@ -22,8 +22,8 @@ void main() {
 
   group("loading", () {
     Future testLoad(Uri uri) async {
-      var loader =  LogLoader();
-      var resource =  Resource(uri, loader: loader);
+      var loader = LogLoader();
+      var resource = Resource(uri, loader: loader);
       var res = await resource.openRead().toList();
       var resolved = await resolve(uri);
       expect(res, [

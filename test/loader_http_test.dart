@@ -31,7 +31,7 @@ void main() {
       var encodings = request.headers[HttpHeaders.acceptCharsetHeader];
       var encoding = parseAcceptCharset(encodings);
       request.response.headers.contentType =
-           ContentType("text", "plain", charset: encoding.name);
+          ContentType("text", "plain", charset: encoding.name);
       if (request.uri.query.contains("length")) {
         request.response.headers.contentLength =
             encoding.encode(content).length;
@@ -130,7 +130,7 @@ Encoding parseAcceptCharset(List<String> headers) {
   Encoding encoding = latin1;
   if (headers != null) {
     var weight = 0.0;
-    var pattern =  RegExp(r"([\w-]+)(;\s*q=[\d.]+)?");
+    var pattern = RegExp(r"([\w-]+)(;\s*q=[\d.]+)?");
     for (var acceptCharset in headers) {
       for (var match in pattern.allMatches(acceptCharset)) {
         var e = Encoding.getByName(match[1]);

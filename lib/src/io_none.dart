@@ -11,7 +11,7 @@ Stream<List<int>> readAsStream(Uri uri) async* {
     yield uri.data.contentAsBytes();
     return;
   }
-  throw  UnsupportedError("Unsupported scheme: $uri");
+  throw UnsupportedError("Unsupported scheme: $uri");
 }
 
 /// Read the bytes of a URI as a list of bytes.
@@ -19,7 +19,7 @@ Future<List<int>> readAsBytes(Uri uri) async {
   if (uri.scheme == "data") {
     return uri.data.contentAsBytes();
   }
-  throw  UnsupportedError("Unsupported scheme: $uri");
+  throw UnsupportedError("Unsupported scheme: $uri");
 }
 
 /// Read the bytes of a URI as a string.
@@ -27,5 +27,5 @@ Future<String> readAsString(Uri uri, Encoding encoding) async {
   if (uri.scheme == "data") {
     return uri.data.contentAsString(encoding: encoding);
   }
-  throw  UnsupportedError("Unsupported scheme: $uri");
+  throw UnsupportedError("Unsupported scheme: $uri");
 }

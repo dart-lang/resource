@@ -19,7 +19,7 @@ import "package:typed_data/typed_buffers.dart" show Uint8Buffer;
 /// Read the bytes of a URI as a stream of bytes.
 Stream<List<int>> readAsStream(Uri uri) async* {
   if (uri.scheme == "file") {
-    yield*  File.fromUri(uri).openRead();
+    yield* File.fromUri(uri).openRead();
     return;
   }
   if (uri.scheme == "http" || uri.scheme == "https") {
@@ -32,13 +32,13 @@ Stream<List<int>> readAsStream(Uri uri) async* {
     yield uri.data.contentAsBytes();
     return;
   }
-  throw  UnsupportedError("Unsupported scheme: $uri");
+  throw UnsupportedError("Unsupported scheme: $uri");
 }
 
 /// Read the bytes of a URI as a list of bytes.
 Future<List<int>> readAsBytes(Uri uri) async {
   if (uri.scheme == "file") {
-    return  File.fromUri(uri).readAsBytes();
+    return File.fromUri(uri).readAsBytes();
   }
   if (uri.scheme == "http" || uri.scheme == "https") {
     var response = await _httpGetBytes(uri);
@@ -46,7 +46,7 @@ Future<List<int>> readAsBytes(Uri uri) async {
     var length = response.contentLength;
     if (length < 0) length = 0;
     // Create empty buffer with capacity matching contentLength.
-    var buffer =  Uint8Buffer(length)..length = 0;
+    var buffer = Uint8Buffer(length)..length = 0;
     await for (var bytes in response) {
       buffer.addAll(bytes);
     }
@@ -55,17 +55,17 @@ Future<List<int>> readAsBytes(Uri uri) async {
   if (uri.scheme == "data") {
     return uri.data.contentAsBytes();
   }
-  throw  UnsupportedError("Unsupported scheme: $uri");
+  throw UnsupportedError("Unsupported scheme: $uri");
 }
 
 /// Read the bytes of a URI as a string.
 Future<String> readAsString(Uri uri, Encoding encoding) async {
   if (uri.scheme == "file") {
     encoding ??= utf8;
-    return  File.fromUri(uri).readAsString(encoding: encoding);
+    return File.fromUri(uri).readAsString(encoding: encoding);
   }
   if (uri.scheme == "http" || uri.scheme == "https") {
-    var request = await  HttpClient().getUrl(uri);
+    var request = await HttpClient().getUrl(uri);
     // Prefer text/plain, text/* if possible, otherwise take whatever is there.
     request.headers.set(HttpHeaders.acceptHeader, "text/plain, text/*, */*");
     if (encoding != null) {
@@ -80,22 +80,22 @@ Future<String> readAsString(Uri uri, Encoding encoding) async {
       var length = response.contentLength;
       if (length < 0) length = 0;
       // Create empty buffer with capacity matching contentLength.
-      var buffer =  Uint8Buffer(length)..length = 0;
+      var buffer = Uint8Buffer(length)..length = 0;
       await for (var bytes in response) {
         buffer.addAll(bytes);
       }
       var byteList = buffer.buffer.asUint8List(0, buffer.length);
-      return  String.fromCharCodes(byteList);
+      return String.fromCharCodes(byteList);
     }
     return response.cast<List<int>>().transform(encoding.decoder).join();
   }
   if (uri.scheme == "data") {
     return uri.data.contentAsString(encoding: encoding);
   }
-  throw  UnsupportedError("Unsupported scheme: $uri");
+  throw UnsupportedError("Unsupported scheme: $uri");
 }
 
-HttpClient _sharedHttpClient =  HttpClient()..maxConnectionsPerHost = 6;
+HttpClient _sharedHttpClient = HttpClient()..maxConnectionsPerHost = 6;
 
 Future<HttpClientResponse> _httpGetBytes(Uri uri) async {
   // ignore: omit_local_variable_types
@@ -108,6 +108,6 @@ Future<HttpClientResponse> _httpGetBytes(Uri uri) async {
 void _throwIfFailed(HttpClientResponse response, Uri uri) {
   var statusCode = response.statusCode;
   if (statusCode < HttpStatus.ok || statusCode > HttpStatus.noContent) {
-    throw  HttpException(response.reasonPhrase, uri: uri);
+    throw HttpException(response.reasonPhrase, uri: uri);
   }
 }

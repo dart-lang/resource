@@ -25,7 +25,7 @@ void main() {
       setUp(() {
         var dirUri = dir.uri;
         uri = dirUri.resolve("file.txt");
-        file =  File.fromUri(uri);
+        file = File.fromUri(uri);
         // ignore: cascade_invocations
         file.writeAsBytesSync(encoding.encode(content));
       });
