@@ -10,8 +10,8 @@ import "dart:isolate" show Isolate;
 import "package:resource/resource.dart";
 import "package:test/test.dart";
 
-main() {
-  pkguri(path) => new Uri(scheme: "package", path: path);
+void main() {
+  Uri pkguri(path) =>  Uri(scheme: "package", path: path);
 
   Future<Uri> resolve(Uri source) async {
     if (source.scheme == "package") {
@@ -21,9 +21,9 @@ main() {
   }
 
   group("loading", () {
-    testLoad(Uri uri) async {
-      LogLoader loader = new LogLoader();
-      var resource = new Resource(uri, loader: loader);
+    Future testLoad(Uri uri) async {
+      var loader =  LogLoader();
+      var resource =  Resource(uri, loader: loader);
       var res = await resource.openRead().toList();
       var resolved = await resolve(uri);
       expect(res, [

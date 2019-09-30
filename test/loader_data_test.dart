@@ -11,25 +11,25 @@ import "package:test/test.dart";
 
 const content = "Rødgrød med fløde";
 
-main() {
-  testFile(Encoding encoding, bool base64) {
+void main() {
+  void testFile(Encoding encoding, bool base64) {
     group("${encoding.name}${base64 ? " base64" : ""}", () {
-      var uri;
+      Uri uri;
       setUp(() {
         var dataUri =
-            new UriData.fromString(content, encoding: encoding, base64: base64);
+             UriData.fromString(content, encoding: encoding, base64: base64);
         uri = dataUri.uri;
       });
 
       test("read string", () async {
         var loader = ResourceLoader.defaultLoader;
-        String string = await loader.readAsString(uri, encoding: encoding);
+        var string = await loader.readAsString(uri, encoding: encoding);
         expect(string, content);
       });
 
       test("read bytes", () async {
         var loader = ResourceLoader.defaultLoader;
-        List<int> bytes = await loader.readAsBytes(uri);
+        var bytes = await loader.readAsBytes(uri);
         expect(bytes, encoding.encode(content));
       });
 

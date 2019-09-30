@@ -20,7 +20,7 @@ class Resource {
   final ResourceLoader _loader;
 
   /// The URI of the resource.
-  final _uri;
+  final dynamic _uri;
 
   /// Creates a resource object with the given [uri] as location.
   ///
@@ -55,13 +55,13 @@ class Resource {
 
   /// Reads the resource content as a stream of bytes.
   Stream<List<int>> openRead() async* {
-    Uri uri = await resolveUri(this.uri);
+    var uri = await resolveUri(this.uri);
     yield* _loader.openRead(uri);
   }
 
   /// Reads the resource content as a single list of bytes.
   Future<List<int>> readAsBytes() async {
-    Uri uri = await resolveUri(this.uri);
+    var uri = await resolveUri(this.uri);
     return _loader.readAsBytes(uri);
   }
 
@@ -71,7 +71,7 @@ class Resource {
   /// If no encoding is provided, an encoding is chosen depending on the
   /// protocol and/or available metadata.
   Future<String> readAsString({Encoding encoding}) async {
-    Uri uri = await resolveUri(this.uri);
+    var uri = await resolveUri(this.uri);
     return _loader.readAsString(uri, encoding: encoding);
   }
 }

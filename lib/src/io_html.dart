@@ -12,7 +12,7 @@ Stream<List<int>> readAsStream(Uri uri) async* {
   // TODO(lrn): Should file be run through XmlHTTPRequest too?
   if (uri.scheme == "http" || uri.scheme == "https") {
     // TODO: Stream in chunks if DOM has a way to do so.
-    List<int> response = await _httpGetBytes(uri);
+    var response = await _httpGetBytes(uri);
     yield response;
     return;
   }
@@ -20,7 +20,7 @@ Stream<List<int>> readAsStream(Uri uri) async* {
     yield uri.data.contentAsBytes();
     return;
   }
-  throw new UnsupportedError("Unsupported scheme: $uri");
+  throw  UnsupportedError("Unsupported scheme: $uri");
 }
 
 /// Reads the bytes of a URI as a list of bytes.
@@ -31,7 +31,7 @@ Future<List<int>> readAsBytes(Uri uri) async {
   if (uri.scheme == "data") {
     return uri.data.contentAsBytes();
   }
-  throw new UnsupportedError("Unsupported scheme: $uri");
+  throw  UnsupportedError("Unsupported scheme: $uri");
 }
 
 /// Reads the bytes of a URI as a string.
@@ -47,7 +47,7 @@ Future<String> readAsString(Uri uri, Encoding encoding) async {
   if (uri.scheme == "data") {
     return uri.data.contentAsString(encoding: encoding);
   }
-  throw new UnsupportedError("Unsupported scheme: $uri");
+  throw  UnsupportedError("Unsupported scheme: $uri");
 }
 
 Future<List<int>> _httpGetBytes(Uri uri) {

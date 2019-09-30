@@ -7,20 +7,21 @@
 import "dart:convert";
 import "dart:io";
 
+import 'package:pedantic/pedantic.dart';
 import "package:resource/resource.dart";
 import "package:test/test.dart";
 
 const content = "Rødgrød med fløde";
 
-main() {
-  var server;
-  var uri;
+void main() {
+  HttpServer server;
+  Uri uri;
   setUp(() async {
     var addr = (await InternetAddress.lookup("localhost"))[0];
     server = await HttpServer.bind(addr, 0);
-    int port = server.port;
+    var port = server.port;
     uri = Uri.parse("http://localhost:$port/default.html");
-    server.forEach((HttpRequest request) {
+    unawaited(server.forEach((HttpRequest request) {
       if (request.uri.path.endsWith(".not")) {
         request.response
           ..statusCode = HttpStatus.notFound
@@ -30,7 +31,7 @@ main() {
       var encodings = request.headers[HttpHeaders.acceptCharsetHeader];
       var encoding = parseAcceptCharset(encodings);
       request.response.headers.contentType =
-          new ContentType("text", "plain", charset: encoding.name);
+           ContentType("text", "plain", charset: encoding.name);
       if (request.uri.query.contains("length")) {
         request.response.headers.contentLength =
             encoding.encode(content).length;
@@ -41,52 +42,55 @@ main() {
     }).catchError((e, stack) {
       print(e);
       print(stack);
-    });
+    }));
   });
 
   test("Default encoding", () async {
     var loader = ResourceLoader.defaultLoader;
-    String string = await loader.readAsString(uri);
+    var string = await loader.readAsString(uri);
     expect(string, content);
   });
 
   test("Latin-1 encoding", () async {
     var loader = ResourceLoader.defaultLoader;
-    String string = await loader.readAsString(uri, encoding: latin1);
+    var string = await loader.readAsString(uri, encoding: latin1);
     expect(string, content);
   });
 
   test("Latin-1 encoding w/ length", () async {
     // Regression test for issue #21.
     var loader = ResourceLoader.defaultLoader;
-    var newUri = uri.replace(query: "length"); // Request length set.
-    String string = await loader.readAsString(newUri, encoding: latin1);
+    // ignore: non_constant_identifier_names
+    var Uri = uri.replace(query: "length"); // Request length set.
+    var string = await loader.readAsString(Uri, encoding: latin1);
     expect(string, content);
   });
 
   test("UTF-8 encoding", () async {
     var loader = ResourceLoader.defaultLoader;
-    var newUri = uri.replace(query: "length"); // Request length set.
-    String string = await loader.readAsString(newUri, encoding: utf8);
+    // ignore: non_constant_identifier_names
+    var Uri = uri.replace(query: "length"); // Request length set.
+    var string = await loader.readAsString(Uri, encoding: utf8);
     expect(string, content);
   });
 
   test("UTF-8 encoding w/ length", () async {
     var loader = ResourceLoader.defaultLoader;
-    String string = await loader.readAsString(uri, encoding: utf8);
+    var string = await loader.readAsString(uri, encoding: utf8);
     expect(string, content);
   });
 
   test("bytes", () async {
     var loader = ResourceLoader.defaultLoader;
-    List<int> bytes = await loader.readAsBytes(uri); // Sender uses Latin-1.
+    var bytes = await loader.readAsBytes(uri); // Sender uses Latin-1.
     expect(bytes, content.codeUnits);
   });
 
   test("bytes w/ length", () async {
     var loader = ResourceLoader.defaultLoader;
-    var newUri = uri.replace(query: "length"); // Request length set.
-    List<int> bytes = await loader.readAsBytes(newUri); // Sender uses Latin-1.
+    // ignore: non_constant_identifier_names
+    var Uri = uri.replace(query: "length"); // Request length set.
+    var bytes = await loader.readAsBytes(Uri); // Sender uses Latin-1.
     expect(bytes, content.codeUnits);
   });
 
@@ -126,7 +130,7 @@ Encoding parseAcceptCharset(List<String> headers) {
   Encoding encoding = latin1;
   if (headers != null) {
     var weight = 0.0;
-    var pattern = new RegExp(r"([\w-]+)(;\s*q=[\d.]+)?");
+    var pattern =  RegExp(r"([\w-]+)(;\s*q=[\d.]+)?");
     for (var acceptCharset in headers) {
       for (var match in pattern.allMatches(acceptCharset)) {
         var e = Encoding.getByName(match[1]);

@@ -28,10 +28,10 @@ abstract class ResourceLoader {
   /// Relative URI references are accepted - they are resolved against
   /// [Uri.base] before being loaded.
   ///
-  /// This loader is automatically used by the [Resource] class
+  /// This loader is automatically used by the `Resource` class
   /// if no other loader is specified.
   static ResourceLoader get defaultLoader =>
-      const PackageLoader(const DefaultLoader());
+      const PackageLoader(DefaultLoader());
 
   /// Reads the file located by [uri] as a stream of bytes.
   Stream<List<int>> openRead(Uri uri);

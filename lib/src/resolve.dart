@@ -10,10 +10,10 @@ Future<Uri> resolveUri(Uri uri) {
   if (uri.scheme == "package") {
     return Isolate.resolvePackageUri(uri).then((resolvedUri) {
       if (resolvedUri == null) {
-        throw new ArgumentError.value(uri, "uri", "Unknown package");
+        throw  ArgumentError.value(uri, "uri", "Unknown package");
       }
       return resolvedUri;
     });
   }
-  return new Future<Uri>.value(Uri.base.resolveUri(uri));
+  return  Future<Uri>.value(Uri.base.resolveUri(uri));
 }

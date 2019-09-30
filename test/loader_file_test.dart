@@ -12,32 +12,33 @@ import "package:test/test.dart";
 
 const content = "Rødgrød med fløde";
 
-main() {
-  var dir;
-  int dirCounter = 0;
+void main() {
+  Directory dir;
+  var dirCounter = 0;
   setUp(() {
     dir = Directory.systemTemp.createTempSync('testdir${dirCounter++}');
   });
-  testFile(Encoding encoding) {
+  void testFile(Encoding encoding) {
     group("${encoding.name}", () {
-      var file;
-      var uri;
+      File file;
+      Uri uri;
       setUp(() {
         var dirUri = dir.uri;
         uri = dirUri.resolve("file.txt");
-        file = new File.fromUri(uri);
+        file =  File.fromUri(uri);
+        // ignore: cascade_invocations
         file.writeAsBytesSync(encoding.encode(content));
       });
 
       test("read string", () async {
         var loader = ResourceLoader.defaultLoader;
-        String string = await loader.readAsString(uri, encoding: encoding);
+        var string = await loader.readAsString(uri, encoding: encoding);
         expect(string, content);
       });
 
       test("read bytes", () async {
         var loader = ResourceLoader.defaultLoader;
-        List<int> bytes = await loader.readAsBytes(uri);
+        var bytes = await loader.readAsBytes(uri);
         expect(bytes, encoding.encode(content));
       });
 
