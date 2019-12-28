@@ -2,9 +2,9 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import "dart:async" show Future, Stream;
-import "dart:convert" show Encoding, latin1, utf8;
-import "dart:io"
+import 'dart:async' show Future, Stream;
+import 'dart:convert' show Encoding, latin1, utf8;
+import 'dart:io'
     show
         File,
         HttpStatus,
@@ -14,33 +14,33 @@ import "dart:io"
         HttpException,
         HttpHeaders;
 
-import "package:typed_data/typed_buffers.dart" show Uint8Buffer;
+import 'package:typed_data/typed_buffers.dart' show Uint8Buffer;
 
 /// Read the bytes of a URI as a stream of bytes.
 Stream<List<int>> readAsStream(Uri uri) async* {
-  if (uri.scheme == "file") {
+  if (uri.scheme == 'file') {
     yield* File.fromUri(uri).openRead();
     return;
   }
-  if (uri.scheme == "http" || uri.scheme == "https") {
+  if (uri.scheme == 'http' || uri.scheme == 'https') {
     var response = await _httpGetBytes(uri);
     _throwIfFailed(response, uri);
     yield* response;
     return;
   }
-  if (uri.scheme == "data") {
+  if (uri.scheme == 'data') {
     yield uri.data.contentAsBytes();
     return;
   }
-  throw UnsupportedError("Unsupported scheme: $uri");
+  throw UnsupportedError('Unsupported scheme: $uri');
 }
 
 /// Read the bytes of a URI as a list of bytes.
 Future<List<int>> readAsBytes(Uri uri) async {
-  if (uri.scheme == "file") {
+  if (uri.scheme == 'file') {
     return File.fromUri(uri).readAsBytes();
   }
-  if (uri.scheme == "http" || uri.scheme == "https") {
+  if (uri.scheme == 'http' || uri.scheme == 'https') {
     var response = await _httpGetBytes(uri);
     _throwIfFailed(response, uri);
     var length = response.contentLength;
@@ -52,22 +52,22 @@ Future<List<int>> readAsBytes(Uri uri) async {
     }
     return buffer.toList();
   }
-  if (uri.scheme == "data") {
+  if (uri.scheme == 'data') {
     return uri.data.contentAsBytes();
   }
-  throw UnsupportedError("Unsupported scheme: $uri");
+  throw UnsupportedError('Unsupported scheme: $uri');
 }
 
 /// Read the bytes of a URI as a string.
 Future<String> readAsString(Uri uri, Encoding encoding) async {
-  if (uri.scheme == "file") {
+  if (uri.scheme == 'file') {
     encoding ??= utf8;
     return File.fromUri(uri).readAsString(encoding: encoding);
   }
-  if (uri.scheme == "http" || uri.scheme == "https") {
+  if (uri.scheme == 'http' || uri.scheme == 'https') {
     var request = await HttpClient().getUrl(uri);
     // Prefer text/plain, text/* if possible, otherwise take whatever is there.
-    request.headers.set(HttpHeaders.acceptHeader, "text/plain, text/*, */*");
+    request.headers.set(HttpHeaders.acceptHeader, 'text/plain, text/*, */*');
     if (encoding != null) {
       request.headers.set(HttpHeaders.acceptCharsetHeader, encoding.name);
     }
@@ -89,10 +89,10 @@ Future<String> readAsString(Uri uri, Encoding encoding) async {
     }
     return response.cast<List<int>>().transform(encoding.decoder).join();
   }
-  if (uri.scheme == "data") {
+  if (uri.scheme == 'data') {
     return uri.data.contentAsString(encoding: encoding);
   }
-  throw UnsupportedError("Unsupported scheme: $uri");
+  throw UnsupportedError('Unsupported scheme: $uri');
 }
 
 HttpClient _sharedHttpClient = HttpClient()..maxConnectionsPerHost = 6;
@@ -101,7 +101,7 @@ Future<HttpClientResponse> _httpGetBytes(Uri uri) async {
   // ignore: omit_local_variable_types
   HttpClientRequest request = await _sharedHttpClient.getUrl(uri);
   request.headers
-      .set(HttpHeaders.acceptHeader, "application/octet-stream, */*");
+      .set(HttpHeaders.acceptHeader, 'application/octet-stream, */*');
   return request.close();
 }
 

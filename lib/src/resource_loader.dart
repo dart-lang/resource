@@ -2,13 +2,13 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import "dart:async" show Future, Stream;
-import "dart:convert" show Encoding;
+import 'dart:async' show Future, Stream;
+import 'dart:convert' show Encoding;
 
-import "io_none.dart"
+import 'io_none.dart'
     if (dart.library.html) "io_html.dart"
     if (dart.library.io) "io_io.dart" as io;
-import "package_loader.dart";
+import 'package_loader.dart';
 
 /// Resource loading strategy.
 ///
@@ -61,10 +61,13 @@ abstract class ResourceLoader {
 class DefaultLoader implements ResourceLoader {
   const DefaultLoader();
 
+  @override
   Stream<List<int>> openRead(Uri uri) => io.readAsStream(uri);
 
+  @override
   Future<List<int>> readAsBytes(Uri uri) => io.readAsBytes(uri);
 
+  @override
   Future<String> readAsString(Uri uri, {Encoding encoding}) =>
       io.readAsString(uri, encoding);
 }

@@ -21,5 +21,5 @@
 ///                             .first;
 library resource;
 
-export "src/resource.dart" show Resource;
-export "src/resource_loader.dart" show ResourceLoader;
+export 'src/resource.dart' show Resource;
+export 'src/resource_loader.dart' show ResourceLoader;
