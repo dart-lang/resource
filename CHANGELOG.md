@@ -1,3 +1,8 @@
+## 2.1.7
+- **This package is discontinued**.
+  The package is not going to be maintained or upgraded in the future.
+  See the `README.md` for more information.
+
 ## 2.1.6
 - Cast stream to `List<int>` in 'readAsString', this is in preparation for
   `HttpClientResponse` implementing `Stream<Uint8List>` (forward compatible

@@ -19,6 +19,7 @@
 ///     var obj = await resource.openRead()   // Reads as stream of bytes.
 ///                             .transform(utf8.fuse(JSON).decoder)
 ///                             .first;
+@deprecated
 library resource;
 
 export 'src/resource.dart' show Resource;
