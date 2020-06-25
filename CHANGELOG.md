@@ -1,4 +1,16 @@
-# Changelog
+## 2.1.6
+- Cast stream to `List<int>` in 'readAsString', this is in preparation for
+  `HttpClientResponse` implementing `Stream<Uint8List>` (forward compatible
+  change, should be a no-op for existing usages)
+
+## 2.1.5
+- Require at least Dart 2.0.0-dev.61.
+
+## 2.1.4
+- Require at least Dart 2.0.0.
+
+## 2.1.3
+- Fix bug in `readAsBytes` which returned twice as much data as expected.
 
 ## 2.1.2
 - Fix bug in `readAsString` when charset is LATIN-1 and content-length is set.
